@@ -7,13 +7,15 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.devsuperior.dscatolog.dto.CategoryDTO;
 import com.devsuperior.dscatolog.entities.Category;
 import com.devsuperior.dscatolog.repositories.CategoryRepository;
+import com.devsuperior.dscatolog.services.execeptions.DataBaseExcepction;
 import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundExcepction;
 
 @Service
@@ -52,9 +54,20 @@ public class CategoryService {
 			entity = categoryRepository.save(entity);
 			return new CategoryDTO(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceAccessException("Id not found" + id);
+			throw new ResourceNotFoundExcepction("Id not found " + id);
 		}
 		
+	}
+
+	
+	public void delete(Long id) {
+		try {
+			categoryRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundExcepction("Id not found " + id);
+		}catch (DataIntegrityViolationException e) {
+			throw new DataBaseExcepction("Integrity violation");
+		}
 	}
 	
 }
