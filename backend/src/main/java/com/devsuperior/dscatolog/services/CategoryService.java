@@ -9,8 +9,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.devsuperior.dscatolog.dto.CategoryDTO;
 import com.devsuperior.dscatolog.entities.Category;
@@ -18,7 +19,8 @@ import com.devsuperior.dscatolog.repositories.CategoryRepository;
 import com.devsuperior.dscatolog.services.execeptions.DataBaseExcepction;
 import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundExcepction;
 
-@Service
+@RestController
+@RequestMapping(value = "/categories")
 public class CategoryService {
 	
 	@Autowired
