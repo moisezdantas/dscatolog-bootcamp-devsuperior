@@ -1,10 +1,10 @@
 package com.devsuperior.dscatolog.services.execeptions;
 
-public class ResourceNotFoundExcepction extends RuntimeException{
+public class ResourceNotFoundException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public ResourceNotFoundExcepction(String msg) {
+	public ResourceNotFoundException(String msg) {
 		super(msg);
 	}
 

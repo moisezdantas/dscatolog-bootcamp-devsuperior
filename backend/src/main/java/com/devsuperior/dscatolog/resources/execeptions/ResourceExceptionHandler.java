@@ -9,15 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.devsuperior.dscatolog.services.execeptions.DataBaseExcepction;
-import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundExcepction;
+import com.devsuperior.dscatolog.services.execeptions.DataBaseException;
+import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	
 	
-	@ExceptionHandler(ResourceNotFoundExcepction.class)
-	public ResponseEntity<StandardError> entityNotFound (ResourceNotFoundExcepction e, HttpServletRequest request){
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<StandardError> entityNotFound (ResourceNotFoundException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.NOT_FOUND;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
@@ -28,8 +28,8 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 	
-	@ExceptionHandler(DataBaseExcepction.class)
-	public ResponseEntity<StandardError> entityNotFound (DataBaseExcepction e, HttpServletRequest request){
+	@ExceptionHandler(DataBaseException.class)
+	public ResponseEntity<StandardError> entityNotFound (DataBaseException e, HttpServletRequest request){
 		HttpStatus status = HttpStatus.BAD_REQUEST;
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());

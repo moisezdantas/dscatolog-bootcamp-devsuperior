@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.devsuperior.dscatolog.dto.CategoryDTO;
 import com.devsuperior.dscatolog.entities.Category;
 import com.devsuperior.dscatolog.repositories.CategoryRepository;
-import com.devsuperior.dscatolog.services.execeptions.DataBaseExcepction;
-import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundExcepction;
+import com.devsuperior.dscatolog.services.execeptions.DataBaseException;
+import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundException;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -35,7 +35,7 @@ public class CategoryService {
 	@Transactional(readOnly = true)
 	public CategoryDTO findById(Long id){
 		Optional<Category> obj = categoryRepository.findById(id);
-		Category entity = obj.orElseThrow(() -> new ResourceNotFoundExcepction("Entity not found"));
+		Category entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new CategoryDTO(entity);
 	
 	}
@@ -56,7 +56,7 @@ public class CategoryService {
 			entity = categoryRepository.save(entity);
 			return new CategoryDTO(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundExcepction("Id not found " + id);
+			throw new ResourceNotFoundException("Id not found " + id);
 		}
 		
 	}
@@ -66,9 +66,9 @@ public class CategoryService {
 		try {
 			categoryRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundExcepction("Id not found " + id);
+			throw new ResourceNotFoundException("Id not found " + id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataBaseExcepction("Integrity violation");
+			throw new DataBaseException("Integrity violation");
 		}
 	}
 	

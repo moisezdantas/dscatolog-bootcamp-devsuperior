@@ -2,7 +2,6 @@ package com.devsuperior.dscatolog.services;
 
 import java.util.Optional;
 
-import javax.annotation.security.DenyAll;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ import com.devsuperior.dscatolog.entities.Category;
 import com.devsuperior.dscatolog.entities.Product;
 import com.devsuperior.dscatolog.repositories.CategoryRepository;
 import com.devsuperior.dscatolog.repositories.ProductRepository;
-import com.devsuperior.dscatolog.services.execeptions.DataBaseExcepction;
-import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundExcepction;
+import com.devsuperior.dscatolog.services.execeptions.DataBaseException;
+import com.devsuperior.dscatolog.services.execeptions.ResourceNotFoundException;
 
 @Service
 public class ProductService {
@@ -40,7 +39,7 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public ProductDTO findById(Long id){
 		Optional<Product> obj = repository.findById(id);
-		Product entity = obj.orElseThrow(() -> new ResourceNotFoundExcepction("Entity not found"));
+		Product entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
 		return new ProductDTO(entity, entity.getCategories());
 	
 	}
@@ -63,7 +62,7 @@ public class ProductService {
 			entity = repository.save(entity);
 			return new ProductDTO(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundExcepction("Id not found " + id);
+			throw new ResourceNotFoundException("Id not found " + id);
 		}
 		
 	}
@@ -73,9 +72,9 @@ public class ProductService {
 		try {
 			repository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundExcepction("Id not found " + id);
+			throw new ResourceNotFoundException("Id not found " + id);
 		}catch (DataIntegrityViolationException e) {
-			throw new DataBaseExcepction("Integrity violation");
+			throw new DataBaseException("Integrity violation");
 		}
 	}
 	

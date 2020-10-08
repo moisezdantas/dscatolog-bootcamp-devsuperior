@@ -1,10 +1,10 @@
 package com.devsuperior.dscatolog.services.execeptions;
 
-public class DataBaseExcepction extends RuntimeException{
+public class DataBaseException extends RuntimeException{
 
 	private static final long serialVersionUID = 1L;
 	
-	public DataBaseExcepction(String msg) {
+	public DataBaseException(String msg) {
 		super(msg);
 	}
 
