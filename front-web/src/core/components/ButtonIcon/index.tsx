@@ -5,8 +5,6 @@ import "./styles.scss";
 type Props = {
   text: string;
 }
-console.log(ArrowIcon)
-
 const Button = ({text}: Props) => (
   <div className="d-flex">
     <button className="btn btn-primary btn-icon">
