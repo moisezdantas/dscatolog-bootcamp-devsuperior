@@ -17,7 +17,7 @@ const Admin = () => {
               <h1>Categories</h1>
           </Route>
           <Route path="/admin/users">
-              <h1>Productos</h1>
+              <h1>Usuários</h1>
           </Route>
         </Switch>
       </div>
