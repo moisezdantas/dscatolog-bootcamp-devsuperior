@@ -25,7 +25,7 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Resource not found");
-		err.setMessgae(e.getMessage());
+		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
@@ -37,7 +37,7 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Database exception");
-		err.setMessgae(e.getMessage());
+		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
@@ -49,7 +49,7 @@ public class ResourceExceptionHandler {
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Validation exception");
-		err.setMessgae(e.getMessage());
+		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());
 		
 		for (FieldError f : e.getBindingResult().getFieldErrors()) {

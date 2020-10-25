@@ -11,7 +11,7 @@ public class StandardError implements Serializable{
 	private Instant timestamp;
 	private Integer status;
 	private String error;
-	private String messgae;
+	private String message;
 	private String path;
 	
 	public StandardError() {
@@ -42,12 +42,12 @@ public class StandardError implements Serializable{
 		this.error = error;
 	}
 
-	public String getMessgae() {
-		return messgae;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setMessgae(String messgae) {
-		this.messgae = messgae;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	public String getPath() {
