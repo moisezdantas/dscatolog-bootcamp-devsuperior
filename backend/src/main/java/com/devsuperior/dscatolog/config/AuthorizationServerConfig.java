@@ -2,6 +2,7 @@ package com.devsuperior.dscatolog.config;
 
 import java.util.Arrays;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,9 @@ import com.devsuperior.dscatolog.components.JwtTokenEnhancer;
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+	
+	
+	private static Logger logger = Logger.getLogger(AuthorizationServerConfig.class);
 
 	@Value("${security.oauth2.client.client-id}")
 	private String clientId;
@@ -54,6 +58,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		
+		logger.info("clientId" + clientId);
+		logger.info("clientSecret" + clientSecret);
+		
+		
 		clients.inMemory()
 		.withClient(clientId)
 		.secret(passwordEncoder.encode(clientSecret))
