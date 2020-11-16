@@ -25,24 +25,26 @@ export const saveSessionData = (loginResponse: LoginResponse) => {
 };
 
 export const getSessionData = () => {
-  const sessionData = localStorage.getItem("authData") ?? "{}";
+  const sessionData = localStorage.getItem("authData") ?? '{}';
   const parsedSessionData = JSON.parse(sessionData);
   return parsedSessionData as LoginResponse;
 };
 
 export const getAccessTokenDecoded = () => {
   const sessionData = getSessionData();
-  const tokenDecoded = jwtDecode(sessionData.access_token);
-  return tokenDecoded as AccessToken;
+  try {
+    const tokenDecoded = sessionData.access_token ? jwtDecode(sessionData.access_token) : {} ;
+    return tokenDecoded as AccessToken;
+  }catch (error){
+    return {} as AccessToken;
+  }
+ 
 };
 
 export const isTokenValid = () => {
   const { exp } = getAccessTokenDecoded();
   return Date.now() <= exp * 1000;
 };
-
-// "authData" no localStorage
-// access_token não pode está espirado
 
 export const isAuthenticated = () => {
   const sessionData = getSessionData();
@@ -57,5 +59,5 @@ export const isAllowedByRole = (routeRoles: Role[] = []) => {
 
   const { authorities } = getAccessTokenDecoded();
 
-  return routeRoles.some((role) => authorities.includes(role));
+  return authorities ? routeRoles.some((role) => authorities?.includes(role)) : false;
 };
