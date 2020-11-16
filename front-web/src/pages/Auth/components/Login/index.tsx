@@ -75,7 +75,7 @@ const Login = () => {
             <div className="invalid-feedback d-block">{errors.password.message}</div>
           )}
         </div>
-        <Link to="/admin/auth/recover" className="login-link-recover">
+        <Link to="/auth/recover" className="login-link-recover">
           Esqueci a senha?
         </Link>
         <div className="login-submit">
@@ -83,7 +83,7 @@ const Login = () => {
         </div>
         <div className="text-center">
           <span className="not-registered">Não tem cadastro?</span>
-          <Link to="/admin/auth/register" className="login-link-register">
+          <Link to="/auth/register" className="login-link-register">
             CADASTRAR
           </Link>
         </div>
