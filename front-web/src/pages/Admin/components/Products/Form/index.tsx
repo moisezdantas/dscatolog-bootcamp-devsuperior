@@ -1,8 +1,10 @@
 import React from "react";
 import { makePrivateRequest } from "core/utils/request";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import BaseForm from "../../BaseForm";
 import "./styles.scss";
+import { useHistory } from "react-router-dom";
 
 type FormState = {
   name: string;
@@ -13,9 +15,17 @@ type FormState = {
 
 const Form = () => {
   const { register, handleSubmit, errors } = useForm<FormState>();
+  const history = useHistory();
 
   const onSubmit = (data: FormState) => {
-    makePrivateRequest({ url: "/products", method: "POST", data });
+    makePrivateRequest({ url: "/products", method: "POST", data })
+      .then(() => {
+        toast.info("Produto cadastrado com sucesso!");
+        history.push("/admin/products");
+      })
+      .catch(() => {
+        toast.error("Erro ao salvar produto");
+      });
   };
 
   return (
@@ -25,14 +35,16 @@ const Form = () => {
           <div className="col-6">
             <div className="margin-bottom-30">
               <input
-                ref={register({ 
-                  required: "Campo obrigatório" , 
+                ref={register({
+                  required: "Campo obrigatório",
                   minLength: {
-                    value: 5 , message: 'O campo deve ter mínino de 5 caracteres',
+                    value: 5,
+                    message: "O campo deve ter mínino de 5 caracteres",
                   },
                   maxLength: {
-                    value: 60 , message: 'O campo deve ter máximo de 60 caracteres',
-                  }
+                    value: 60,
+                    message: "O campo deve ter máximo de 60 caracteres",
+                  },
                 })}
                 name="name"
                 type="text"
@@ -84,11 +96,11 @@ const Form = () => {
               rows={10}
               placeholder="Descrição"
             />
-             {errors.description && (
-                <div className="invalid-feedback d-block">
-                  {errors.description.message}
-                </div>
-              )}
+            {errors.description && (
+              <div className="invalid-feedback d-block">
+                {errors.description.message}
+              </div>
+            )}
           </div>
         </div>
       </BaseForm>
