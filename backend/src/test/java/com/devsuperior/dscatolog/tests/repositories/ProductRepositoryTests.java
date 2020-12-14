@@ -1,10 +1,8 @@
 package com.devsuperior.dscatolog.tests.repositories;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,9 +64,20 @@ public class ProductRepositoryTests {
 		
 	}
 	
+	@Test
+	public void findShouldReturnNothingWhenNameDoesNotExist() {
+		
+		String name = "Camera";
+		
+		Page<Product> result = repository.find(null, name, pageRequest);
+		
+		Assertions.assertTrue(result.isEmpty());
+		
+	}
+	
 	
 	@Test
-	public void findShouldReturnALLProductsWhenNameisEmpty() {
+	public void findShouldReturnALLProductsWhenNameIsEmpty() {
 		
 		String name = "";
 		
