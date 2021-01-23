@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useForm , Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import Select from 'react-select';
+import Select from "react-select";
 import { makePrivateRequest, makeRequest } from "core/utils/request";
 import { useHistory, useParams } from "react-router-dom";
 import BaseForm from "../../BaseForm";
-import './styles.scss';
+import "./styles.scss";
 import { Category } from "core/types/Product";
-
 
 type FormState = {
   name: string;
@@ -21,14 +20,19 @@ type ParamsType = {
   productId: string;
 };
 
-
 const Form = () => {
-  const { register, handleSubmit, errors, setValue, control } = useForm<FormState>();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    setValue,
+    control,
+  } = useForm<FormState>();
   const history = useHistory();
 
   const { productId } = useParams<ParamsType>();
-  const [ categories, setCategories ] = useState<Category[]>();
-  const [ isLoadingCategories, setIsLoadingCategories ] = useState(false);
+  const [categories, setCategories] = useState<Category[]>();
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
   const isEditing = productId !== "create";
   const formTitle = `${
     isEditing ? "EDITAR UM PRODUTO" : "CADASTRAR UM PRODUTO"
@@ -48,10 +52,10 @@ const Form = () => {
 
   useEffect(() => {
     setIsLoadingCategories(true);
-    makeRequest({ url: '/categories' })
+    makeRequest({ url: "/categories" })
       .then((response) => setCategories(response.data.content))
       .finally(() => setIsLoadingCategories(false));
-  }, [setIsLoadingCategories])
+  }, [setIsLoadingCategories]);
 
   const onSubmit = (data: FormState) => {
     makePrivateRequest({
@@ -101,16 +105,18 @@ const Form = () => {
               <Controller
                 name="categories"
                 rules={{
-                  required:true
+                  required: true,
                 }}
                 control={control}
                 isLoading={isLoadingCategories}
                 as={Select}
                 options={categories}
-                getOptionLabel={(option:Category) => option.name}
-                getOptionValue={(option:Category) => String(option.id)}
+                getOptionLabel={(option: Category) => option.name}
+                getOptionValue={(option: Category) => String(option.id)}
                 classNamePrefix="categories-select"
                 placeholder="Categorias"
+                inputId="categories"
+                defaultValue=""
                 isMulti
               />
               {errors.categories && (
